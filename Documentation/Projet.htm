@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>PI: Shortest Path Trees and Reach in Road Networks - INF421, 2016</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+</head>
+<body>
+	<h1>PI: Shortest Path Trees and Reach in Road Networks - INF421, 2016</h1>
+<h4>Topic proposed by: Adrian Kosowski</h4>
+	<h2>The background</h2>
+	<p>
+		The predicament of road travelers who find themselves in the remote 
+countryside is a common theme, both in real life and in fiction. In 
+movies, those enjoying a road trip through remote places may be 
+approached by locals with suspicion, and occasionally with pitchforks. 
+Such travelers may be assumed to have either lost their way, or simply 
+to be up to no good. After all, why should anyone be traveling along a 
+small road in the middle of nowhere? It turns out that such an attitude 
+is not completely ungrounded. An analysis of real world networks shows 
+that if travelers were to adhere to some reasonable navigation scheme 
+(e.g., always choosing fastest routes), there are many roads on the map 
+they should <em>never</em> use, unless they are very close to the 
+starting point of their trip or to their destination. This is, in fact, 
+the case, not only in the countryside, but also in cities. If we are 
+traveling more than a short distance, we tend to cover most of our way 
+using a relatively small subset of the road network. This small subset 
+mostly consists of transit arteries, such as highways and other 
+important roads.
+	</p>
+	<p>	
+		In this project, we will focus on investigating this property for the road network of France.
+	</p>
+	<p>
+		<strong>Side note:</strong> The structural observation we have made 
+above is at the heart of ultra-efficient routing algorithms in 
+transportation, used for finding fast routes between points A and B in 
+most modern map engines. These algorithms tend to find shortest paths on
+ a map of millions of vertices in a matter of a microsecond (i.e., a 
+thousand clock cycles) on a single CPU. If you are interested, you can 
+read more about <a href="http://people.mpi-inf.mpg.de/%7Efunke/Papers/SCIENCE07/SCIENCE07.pdf">Transit Node Routing</a>, as well as its more sophisticated cousin called the <a href="https://en.wikipedia.org/wiki/Contraction_hierarchies">Contraction Hierarchy</a> Algorithm. You can also see such algorithms running in some <a href="http://project-osrm.org/">open-source routing engines</a>. We will not implement such routing algorithms here, but nevertheless you may gain some intuitions on <em>why</em> such algorithms work quickly in practice.
+	</p>
+	<h2>What to expect?</h2>
+	<p>This project will teach you to handle medium-to-large graph data 
+(several million vertices and edges). If you like practical aspects of 
+algorithms, it will also offer some rewarding visualizations and 
+insights without much additional work on your part.
+	</p><p>
+	If you are an expert programmer and know what you are doing, you can 
+write all the required code in about 100-200 lines (for option A) or 
+200-300 lines (for option B) in one evening. Still, depending on the 
+chosen option, you may need to leave several days until the deadline to 
+run some simulations, etc.
+	</p><p>
+	If you do not have much programming experience, you may need a 
+considerable amount of time to get the details right. You will not run 
+into anything ultra-difficult, but you may find some details are a bit 
+tedious to take care of. Do not start less than 2 weeks before the 
+deadline. Option A is recommended for those with less programming 
+experience.
+	</p>
+	<p>
+	You should be able to run all the required code on a standard 
+desktop/portable computer. Some simulations in option B may need to be 
+run over a few hours. To keep things fair and not to distort the focus 
+of this project, you are not expected to (i.e., not allowed to) use a 
+cluster or supercomputer.
+	
+	</p><h2>Getting ready: working with network data</h2>
+	<p>
+		You are given a representation of a road network, modeled as a 
+directed graph with weights on its directed edges. Each vertex 
+corresponds to a waypoint (a point along a road or at crossroads, chosen
+ by the designer of the map). Each directed edge corresponds to a direct
+ section of road connecting one waypoint with another. The weight of 
+each directed edge is positive and represents the travel time when 
+following this directed edge.
+	</p><p>
+		Please read the <a href="#input">input data</a> format section carefully for more information about how the data files are organized. 
+	</p><p>
+		<strong>Useful observation:</strong>You can think of each edge with integer travel time <em>t</em> as containing exactly <em>t</em>-1
+ intermediate points, so that the travel time between such adjacent 
+points in the network is exactly 1 time unit (e.g., 1 milisecond). When 
+we subsequently use the term <em>point</em>, we refer either to a vertex or to such an intermediate point on a directed edge.
+	</p>
+	<h2>First Task: Properties of Shortest-Path Trees (12 points)</h2>
+	<p>
+		Read in the provided data file, representing the road network of France. Suppose you are a traveler who <strong>always follows quickest paths</strong>
+ from your starting point (a vertex) to your destination (another 
+vertex). Here, the time needed to travel along a path is measured 
+naturally, as the sum of all travel times of all the directed edges it 
+consists of.
+	</p>
+		
+	<p>Pick your favorite starting point <em>v</em> in the center of Paris.</p>
+		
+	<p>Identify the number of different possible points you may be located in at the current moment of your trip, when:
+		</p><ul>
+		<li>(1.1) you have been traveling for time exactly t<sub>1</sub> = 1 hour from the fixed starting point <em>v</em> towards your destination, which may be any sufficiently distant point in the network.</li>
+		<li>(1.2) you have been traveling for time exactly t<sub>2</sub> = 2 hours from the fixed starting point <em>v</em> towards your destination, which may be any sufficiently distant point in the network.</li>
+		<li>(1.3) you have been traveling for time exactly t<sub>1</sub> = 1 hour from the fixed starting point <em>v</em>  towards your destination, when it is known that your destination is at least t<sub>2</sub> = 2 hours' way away from your starting point <em>v</em>.</li>
+		</ul>
+		
+	<p>
+	(1.4) <strong>Methods:</strong> You should briefly discuss the graph 
+algorithms used to answer the above questions. If you do not know how to
+ approach the problem at all, <a href="http://wiki.openstreetmap.org/wiki/Isochrone">this suggestion from OpenStreetMap</a>
+ should give you a valuable hint. Do your best to make sure that the 
+running time of all your algorithms is not worse than O(|E| log |V|). 
+Ideally, your algorithm should run even faster than this when t<sub>1</sub> and t<sub>2</sub> are small, subject to some reasonable assumptions on the structure of the network.
+	</p>
+	<p>
+	After performing tasks (1.1) to (1.4), you can choose one of two 
+options to follow next: option A or option B. Either option allows you 
+to score full points. Option A is a little easier to complete. If you 
+just do "what is required" in this option, without obtaining some 
+interesting insights in the analysis exercise, you can expect to get a 
+total score of up to 17/20.  
+	</p>
+	
+	<h2>Option A: More experiments (5 points + 3 points)</h2>
+	<p>Following up on part 1, perform additional tests:
+		</p><ul>
+		<li>(A.1). Repeat exercises (1.1), (1.2), (1.3) with different choices
+ of starting points: your favorite place in Île-de-France (such as 
+Lozère) and a remote place in the countryside (e.g., in Limousine or 
+Auvergne). Compare the results briefly.
+		</li>	
+		<li>(A.2). For <em>v</em> in the center of Paris, repeat exercise (1.1) using different values of time t<sub>1</sub> (ranging from 1 minute to 8 hours). Plot the results.
+		</li><li>(A.3). For <em>v</em> in the center of Paris, repeat exercise (1.3) for fixed t<sub>1</sub>, changing the ratio t<sub>2</sub> / t<sub>1</sub> in the range from 1.1 to 4.0. Plot the results.
+		</li></ul>
+	<p></p>
+	<p>
+	(A.4*) Analyze the plots obtained in (A.2) and (A.3). Is the shape of 
+the plots consistent with similar plots you would get if you were to 
+model the road network as a subgraph of the two-dimensional grid, with 
+edges included independently at random (this is known as a <a href="https://en.wikipedia.org/wiki/Percolation_theory#/media/File:Bond_percolation_p_51.png">bond percolation</a>)?
+ Perform simulations and compare. Any attempt at theoritical explanation
+ is an extremely hard research question (especially for the percolation 
+model), but any intuitions you might have in this direction would be 
+highly welcome.
+	</p>
+	<h2>Option B: More theory and algorithms (8 points)</h2>
+	<p>If you choose this option, you will explore the notion of reach, which is fundamental to transit routing. For a vertex <em>v</em> in a directed graph, its <strong>reach</strong> <em>r</em>(<em>v</em>) is the largest non-negative real value <em>r</em> such that there exists a pair of vertices  <em>s</em> and <em>t</em>, such that the following conditions hold:
+	</p><ul>
+	<li>Some fastest path from <em>s</em> to <em>t</em> passes through vertex <em>v</em>.</li>
+	<li>The travel time from <em>s</em> to <em>v</em> following the fastest path is at least <em>r</em>.</li>
+	<li>The travel time from <em>v</em> to <em>t</em> following the fastest path is at least <em>r</em>.</li>
+	
+	</ul>
+	<p>(B.1) Warm-up: Let <em>D</em> be the diameter of the directed graph 
+(the longest possible travel time between a pair of vertices, following 
+quickest paths). Show that the reach of a vertex in this graph is at 
+most <em>D</em>/2.
+	</p><p>Let <em>v</em> be the vertex in the center of Paris chosen in part 1. Let <em>T<sub>out</sub></em> be the set of points to which the travel time from <em>v</em> is exactly 1 hour when traveling to a destination at least 2 hours' way away, as identified in problem (1.3). Likewise, let <em>S<sub>in</sub></em> be the set of points from which the travel time to <em>v</em> is precisely 1 hour, when following a quickest path from a starting point located at least 2 hours' way from <em>v</em>. 
+	</p><p>(B.2) Show that if the reach of <em>v</em> is less than 1 hour, then there cannot exist a point <em>s</em> in <em>S<sub>in</sub></em> and a point  <em>t</em> in <em>T<sub>out</sub></em>, such that some quickest path from <em>s</em> to <em>t</em> passes through <em>v</em>. 
+	</p><p>(B.3) Show that if the reach of <em>v</em> is at least 2 hours, then there must exist a point <em>s</em> in <em>S<sub>in</sub></em> and a point  <em>t</em> in <em>T<sub>out</sub></em>, such that some quickest path from <em>s</em> to <em>t</em> passes through <em>v</em>. 
+	</p><p>(B.4) Use the results of (B.2) and (B.3) to implement an 
+intuitive approximation algorithm for estimating the value of reach of a
+ given vertex of the road network. The approximation factor of this 
+algorithm should be at most 2. Based on the results of part 1, explain 
+very briefly why you expect this algorithm to run quickly. Describe any 
+further optimizations you may have performed.
+	</p><p>(B.5) Sample some vertices on the map of France, uniformly at 
+random. The size of the sample should be at least 100; a sample of size 
+1000 would be preferable. Estimate the reach for each of these vertices 
+using an algorithm with guaranteed approximation ratio, such as the 
+algorithm from (B.4).
+	</p><p>(B.6) Based on the results of (B.5), plot a histogram, showing 
+how many vertices have reach of approximately: 7.5 minutes (or under), 
+15 minutes, 30 minutes, 1 hour, 2 hours, 4 hours, etc.
+	</p><h2>Input data format</h2><a id="input">
+	<p>The graphs you are to work on are provided with this exercise. Each 
+input file consists of lines of text, each of which starts with the 
+character "v" or "a", followed by three space-separated integers. Each 
+line starting with "v" represents a vertex of the network, each line 
+starting with "a" represents a directed edge of the network. All lines 
+starting with "v" come before those starting with "a". The respective 
+format is as follows:
+	</p><ul>
+	<li>v <em>id longitude latitude</em> --- represents a vertex whose unique integer identifier is <em>id</em>, located on the map at geographical coordinates <em>longitude</em> and <em>latitude</em>. The longitude and latitude are represented as integers, measured in one millionth (10<sup>-6</sup>)
+ parts of a degree in the standard GPS coordinate systems. 
+Positive-signed integers correspond to the Northern and Eastern 
+hemispheres, negative-signed integers correspond to the Southern and 
+Western hemisphere. If you don't like visualising things, you can 
+disregard these geographical coordinates. 
+	</li><li>a <em>id_start id_end t</em> --- represents a directed edge from vertex with identifier <em>id_start</em> to vertex with identifier <em>id_end</em> with travel time <em>t</em>, where time is measured in milliseconds.
+	</li></ul>
+	<h2>Data files</h2>
+	All data is available in one </a><a href="https://www.irif.fr/%7Ekosowski/INF421-2016/RoadNetworks.zip">ZIP file</a>. It contains the following data files, loosely based on OpenStreetMap data:
+	<ul>
+	<li><tt>france.in</tt> --- A map of the road network of France, which you are supposed to work with (4.1M vertices, 9.4M directed edges).
+	</li><li><tt>idf.in</tt> --- A map of the road network of 
+Île-de-France, which is somewhat smaller (1.1M vertices, 1.9M directed 
+edges). Could be a bit faster to work with during your internal testing.
+	</li><li><tt>malta.in</tt> and <tt>man.in</tt> --- Maps of the road 
+networks of Malta and the Isle of Man, which are much smaller. You can 
+use these input files for debugging.	
+	</li></ul>
+	<p>
+	If you are unable to get your project running on the full map of France, you will not get a very high score.
+	</p>
+	<h2>Output format</h2>
+	<p>You are completely free to design your program in any way you like, as long as it allows you to perform the required analysis.</p>
+	<p>For your convenience only, we provide a simple framework for 
+visualizing a set of points with the given coordinates on a map --- see 
+the <a href="https://www.irif.fr/%7Ekosowski/INF421-2016/vis/vis.html">vis/vis.html</a> file. The points visualized are fed from the list of coordinates in the <tt>points.js</tt> file. If your program outputs text data with a sequence of points in the format of the <tt><a href="https://www.irif.fr/%7Ekosowski/INF421-2016/vis/points.js">points.js</a></tt>
+ file, you will be able to visualize it directly. You can have a look at
+ the sources of these files for more details about how they are 
+organized.
+	</p><p>You are welcome to add several figures with relevant maps in your project report, but do not put too many.
+	
+
+</p></body></html>
