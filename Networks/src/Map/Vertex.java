@@ -11,6 +11,10 @@ public class Vertex {
     
     List<Edge> leavingEdges;
     List<Edge> comingEdges;
+    
+    //Dijkstra
+    Vertex pred;
+    int dist;
 
     public Vertex(long id, int lat, int lng) {
         this.id = id;

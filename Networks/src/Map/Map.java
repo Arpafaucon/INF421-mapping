@@ -7,21 +7,34 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class Map {
 
-    public List<Vertex> vertices;
+    public HashMap<Long, Vertex> vertices;
     public List<Edge> edges;
 
     public Map() {
-        vertices = new ArrayList<>();
+        vertices = new HashMap();
         edges = new ArrayList<>();
     }
-    
+
     @Override
-    public String toString(){
-        String str = "Map Object ( v: " + this.vertices.size() + "; a: " + this.edges.size() +" )";
+    public String toString() {
+        String str = "Map Object ( v: " + this.vertices.size() + "; a: " + this.edges.size() + " )";
         return str;
+    }
+
+    public void listVertex() {
+        for (int i = 0; i < this.vertices.size(); i++) {
+            System.out.println(i + ">" + this.vertices.get(i).toString() + "\n");
+        }
+    }
+
+    public void computeDijkstra(int startVertexId) {
+
     }
 
     public void saveVertexToVisFile(String filename) {
@@ -34,23 +47,42 @@ public class Map {
 
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
-            
+
             bw.write("var plottedPoints = [\n");
-            for (int i = 0; i < this.vertices.size() -1; i++) {
-                bw.write("\t" + this.vertices.get(i).toGeoString() + ",\n"); 
+            int n = this.vertices.size();
+
+            Iterator entries = this.vertices.entrySet().iterator();
+            String line = "";
+            Entry curEntry;
+            Vertex curVertex = new Vertex(0,0,0);
+            while (entries.hasNext()) {
+                Entry thisEntry = (Entry) entries.next();
+                //Long key = (Long) thisEntry.getKey();
+                curVertex = (Vertex) thisEntry.getValue();
+                line = "\t" + curVertex.toGeoString() + (entries.hasNext()?',':"") + "\n";
+                bw.write(line);
+                // ...
             }
+            
+//            if (n > 0) {
+//                bw.write("\t" + this.vertices.get(0).toGeoString() + "\n");
+//                for (int i = 1; i < this.vertices.size(); i++) {
+//                    bw.write("\t" + this.vertices.get(i).toGeoString() + ",\n");
+//                }
+//            } else {
+//                System.out.println("Warning : empty vertices list");
+//            }
+
 //            for(Vertex v : this.vertices){
 //                bw.write("\t" + v.toGeoString() + ",\n"); 
 //            }
-            bw.write("\t" + this.vertices.get(this.vertices.size()-1).toGeoString() + "\n");
             bw.write("];\n");
-            bw.write("var centralMarker =\n");
+            bw.write("var centralMarker =");
             System.out.println("central vertex...");
-            bw.write(this.vertices.get(0).toGeoString() + ";");
+            bw.write(curVertex.toGeoString() + ";");
             bw.close();
-            
-        }
-        catch(IOException e){
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

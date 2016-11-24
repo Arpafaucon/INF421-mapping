@@ -16,7 +16,6 @@ public class MapLoader {
         File file = new File(filename);
         String[] lineData;
         Map map = new Map();
-        System.out.println(Integer.MAX_VALUE);
         //try {
             // Create a new Scanner object which will read the data
             // from the file passed in. To check if there are more 
@@ -31,7 +30,7 @@ public class MapLoader {
                 //System.out.println(lineData[0] + ":" + lineData[1] + ":" + lineData[2] + ":" + lineData[3]);
                 if(lineData[0].equals("v")){
                     //vertex
-                    map.vertices.add(new Vertex(Long.parseLong(lineData[1]), Integer.parseInt(lineData[2]), Integer.parseInt(lineData[3])));
+                    map.vertices.put(Long.parseLong(lineData[1]), new Vertex(Long.parseLong(lineData[1]), Integer.parseInt(lineData[2]), Integer.parseInt(lineData[3])));
                 }
                 if(lineData[0].equals("a")){
                     //on a une arrete

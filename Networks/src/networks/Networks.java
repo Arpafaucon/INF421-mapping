@@ -18,9 +18,10 @@ public class Networks {
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException{
-        Map map = MapLoader.buildMap("data/"+"idf"+".in");
+        Map map = MapLoader.buildMap("data/"+"malta"+".in");
         System.out.println("done building map");
         map.saveVertexToVisFile("test");
+      // map.listVertex();
     }
     
 }
