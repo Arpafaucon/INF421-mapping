@@ -21,7 +21,7 @@ public class Networks {
     public static void main(String[] args) throws FileNotFoundException{
         Carte map = new Carte("data/"+"malta"+".in");
         System.out.println("done building map");
-        System.out.println(map.vertices.toString());
+//        System.out.println(map.vertices.toString());
         Vis.save(map, "test");
         //map.saveVertexToVisFile("test");
       // map.listVertex();

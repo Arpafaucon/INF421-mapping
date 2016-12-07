@@ -22,6 +22,8 @@ public class Vertex {
         this.lng = lng;
         this.leavingEdges = new ArrayList<>();
         this.comingEdges = new ArrayList<>();
+        
+        this.dist = Integer.MAX_VALUE;
     }
     
     @Override
