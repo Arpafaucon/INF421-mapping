@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package networks;
-import Map.Map;
+import Carte.Carte;
+import Vis.Vis;
 import java.io.FileNotFoundException;
 
 /**
@@ -18,9 +19,11 @@ public class Networks {
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException{
-        Map map = MapLoader.buildMap("data/"+"malta"+".in");
+        Carte map = new Carte("data/"+"malta"+".in");
         System.out.println("done building map");
-        map.saveVertexToVisFile("test");
+        System.out.println(map.vertices.toString());
+        Vis.save(map, "test");
+        //map.saveVertexToVisFile("test");
       // map.listVertex();
     }
     

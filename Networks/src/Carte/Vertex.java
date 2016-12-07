@@ -1,4 +1,4 @@
-package Map;
+package Carte;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class Vertex {
     
     @Override
     public String toString(){
-        return "V : " + id + "[ " + this.lng + " , " + this.lat + " ]";
+        return "V:" + id + "[" + this.lng + "," + this.lat + "]";
     }
     
     public String toGeoString(){

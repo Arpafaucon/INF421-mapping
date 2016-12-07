@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Map;
+package Carte;
 
 /**
  *
@@ -21,5 +21,10 @@ public class Edge {
         this.start = start;
         this.end = end;
         this.length = length;
+    }
+    
+    @Override
+    public String toString(){
+        return "E::"+start+"-"+end+"::"+length;
     }
 }
