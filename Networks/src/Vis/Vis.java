@@ -20,7 +20,8 @@ import java.util.List;
 public class Vis {
 
     public static void save(List<Vertex> plottedVertex, Vertex centralVertex, String filename) {
-        File file = new File("vis/" + filename + ".js");
+    	System.out.println(System.getProperty("user.dir"));
+        File file = new File("INF421-mapping/Networks/vis/" + filename + ".js");
         try {
             if (!file.exists()) {
                 file.createNewFile();

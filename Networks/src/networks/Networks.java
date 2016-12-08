@@ -19,7 +19,8 @@ public class Networks {
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException{
-        Carte map = new Carte("data/"+"malta"+".in");
+    	//System.out.println(System.getProperty("user.dir"));
+        Carte map = new Carte("INF421-mapping/Networks/data/"+"malta"+".in");
         System.out.println("done building map");
 //        System.out.println(map.vertices.toString());
         Vis.save(map, "test");
