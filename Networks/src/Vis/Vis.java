@@ -21,12 +21,12 @@ public class Vis {
 
     public static void save(List<Vertex> plottedVertex, Vertex centralVertex, String filename) {
     	System.out.println(System.getProperty("user.dir"));
-        File file = new File("INF421-mapping/Networks/vis/" + filename + ".js");
+        File file = new File("vis/" + filename + ".js");
         try {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            
+
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
 
@@ -34,10 +34,10 @@ public class Vis {
             int n = plottedVertex.size();
             String line;
             for (int i = 0; i < n; i++) {
-                line = "\t" + plottedVertex.get(i).toGeoString() + (i < n-1 ? ',' : "") + "\n";
+                line = "\t" + plottedVertex.get(i).toGeoString() + (i < n - 1 ? ',' : "") + "\n";
                 bw.write(line);
             }
-            
+
             bw.write("];\n");
             bw.write("var centralMarker =");
             System.out.println("central vertex...");
@@ -57,10 +57,14 @@ public class Vis {
             e.printStackTrace();
         }
     }
-    
-    public static void save(Carte carte, String filename){
+
+    public static void save(Carte carte, String filename) {
         ArrayList<Vertex> plottedVertex = new ArrayList<>(carte.vertices.values());
         Vertex centralVertex = plottedVertex.get(0);
         Vis.save(plottedVertex, centralVertex, filename);
-}
+    }
+    
+    public static void savePath(List<Vertex> path, String filename){
+        Vis.save(path, path.get(0), filename);
+    }
 }
