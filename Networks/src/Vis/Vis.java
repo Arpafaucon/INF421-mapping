@@ -27,21 +27,17 @@ public class Vis {
             }
 
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-
-            bw.write("var plottedPoints = [\n");
-            int n = plottedVertex.size();
-            String line;
-            for (int i = 0; i < n; i++) {
-                line = "\t" + plottedVertex.get(i).toGeoString() + (i < n - 1 ? ',' : "") + "\n";
-                bw.write(line);
-            }
-
-            bw.write("];\n");
-            bw.write("var centralMarker =");
-            System.out.println("central vertex...");
-            bw.write(centralVertex.toGeoString() + ";");
-            bw.close();
+            try (BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write("var plottedPoints = [\n");
+                int n = plottedVertex.size();
+                String line;
+                for (int i = 0; i < n; i++) {
+                    line = "\t" + plottedVertex.get(i).toGeoString() + (i < n - 1 ? ',' : "") + "\n";
+                    bw.write(line);
+                }   bw.write("];\n");
+                bw.write("var centralMarker =");
+                System.out.println("central vertex...");
+                bw.write(centralVertex.toGeoString() + ";");
 //            Map.Entry curEntry;
 //            Vertex curVertex = new Vertex(0, 0, 0);
 //            while (entries.hasNext()) {
@@ -52,6 +48,7 @@ public class Vis {
 //                bw.write(line);
 //                // ...
 //            }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
