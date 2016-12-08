@@ -9,7 +9,7 @@ package Carte;
  *
  * @author arpaf
  */
-public class Edge {
+public class Edge{
     long start;
     long end;
     int length;
@@ -23,8 +23,18 @@ public class Edge {
         this.length = length;
     }
     
+    public Edge(Vertex startVertex, Vertex endVertex, int length){
+        this.startVertex = startVertex;
+        this.endVertex = endVertex;
+        this.start = startVertex.id;
+        this.end = endVertex.id;
+        this.length = length;
+    }
+    
     @Override
     public String toString(){
         return "E::"+start+"-"+end+"::"+length;
     }
+    
+
 }

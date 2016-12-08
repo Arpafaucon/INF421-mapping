@@ -7,6 +7,7 @@ package networks;
 import Carte.Carte;
 import Vis.Vis;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 /**
  *
@@ -19,10 +20,20 @@ public class Networks {
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException{
-        Carte map = new Carte("data/"+"malta"+".in");
+        Random rand = new Random();
+        
+        Carte map = new Carte("data/"+"idf"+".in");
         System.out.println("done building map");
+        Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]);
+        int idn = ids.length;
+        int start = rand.nextInt(idn);
+        int end = rand.nextInt(idn);
+        System.out.println("vertex number: " + ids.length + "--" + ids[0] + "//" + ids[ids.length -1]);
+        map.computeDijkstra(ids[start]);
+        System.out.println("computed Dijkstra");
+        Vis.savePath(map.shortestPathTo(ids[end]), "test");
 //        System.out.println(map.vertices.toString());
-        Vis.save(map, "test");
+//        Vis.save(map, "test");
         //map.saveVertexToVisFile("test");
       // map.listVertex();
     }

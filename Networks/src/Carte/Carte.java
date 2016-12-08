@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 //import java.io.FileWriter;
 //import java.io.BufferedWriter;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
 //import java.util.Iterator;
 //import java.util.Map.Entry;
 import java.util.Scanner;
@@ -44,7 +46,7 @@ public class Carte {
             }
             if (lineData[0].equals("a")) {
                 //on a une arrete
-                curEdge = new Edge(Long.parseLong(lineData[1]), Long.parseLong(lineData[2]), Integer.parseInt(lineData[3]));
+                curEdge = new Edge(vertices.get(Long.parseLong(lineData[1])), vertices.get(Long.parseLong(lineData[2])), Integer.parseInt(lineData[3]));
                 edges.add(curEdge);
                 vertices.get(Long.parseLong(lineData[1])).leavingEdges.add(curEdge);
                 vertices.get(Long.parseLong(lineData[2])).comingEdges.add(curEdge);
@@ -58,7 +60,41 @@ public class Carte {
         return str;
     }
 
-    public void computeDijkstra(int startVertexId) {
-
+    public void computeDijkstra(long startVertexId) {
+        Vertex v;
+        Vertex voisin;
+        int altDistance;
+        
+        vertices.get(startVertexId).dist = 0;
+        PriorityQueue<Vertex> queue = new PriorityQueue(vertices.values());
+        System.out.println("built queue");
+        
+        while(!queue.isEmpty()){
+            v = queue.poll();
+            for(Edge leaving : v.leavingEdges){
+                voisin = leaving.endVertex;
+                altDistance = v.dist + leaving.length;
+                if(altDistance < voisin.dist){
+                    //on a trouvé un chemi plus court. On modifie l'object (et on le desinsere reinsere pour cela)
+                    queue.remove(voisin);
+                    voisin.pred = v;
+                    voisin.dist = altDistance;
+                    queue.add(voisin);
+                }
+            }
+        }
+        
+        //on a la distance de tous les points.
+    }
+    
+    public List<Vertex> shortestPathTo(long endVertexId){
+        List<Vertex> path = new LinkedList<>();
+        Vertex v = vertices.get(endVertexId);
+        path.add(0, v);
+        while(v.pred != null){
+            v = v.pred;
+            path.add(0, v);
+        }
+        return path;
     }
 }
