@@ -20,6 +20,7 @@ import java.util.List;
 public class Vis {
 
     public static void save(List<Vertex> plottedVertex, Vertex centralVertex, String filename) {
+    	System.out.println(System.getProperty("user.dir"));
         File file = new File("vis/" + filename + ".js");
         try {
             if (!file.exists()) {

@@ -22,10 +22,10 @@ public class Networks {
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException{
+
         Random rand = new Random();
-        
+
         Carte map = new Carte("data/"+"france"+".in");
-        System.out.println("done building map");
         Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]);
         int idn = ids.length;
         int start = rand.nextInt(idn);
