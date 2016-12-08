@@ -25,9 +25,9 @@ public class Networks {
         
         Carte map = new Carte("data/"+"malta"+".in");
         System.out.println("done building map");
-        Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]);
+        Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]); //id des points
         int idn = ids.length;
-        int start = rand.nextInt(idn);
+        int start = rand.nextInt(idn); //tirage au sort de deux points
         int end = rand.nextInt(idn);
         System.out.println("vertex number: " + ids.length + "--" + ids[0] + "//" + ids[ids.length -1]);
         map.computeDijkstra(ids[start]);
