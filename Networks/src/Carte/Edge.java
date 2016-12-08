@@ -14,8 +14,8 @@ public class Edge{
     long end;
     int length;
     
-    Vertex startVertex;
-    Vertex endVertex;
+    public Vertex startVertex;
+    public Vertex endVertex;
     
     public Edge(long start, long end, int length){
         this.start = start;

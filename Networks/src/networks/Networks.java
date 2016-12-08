@@ -5,8 +5,10 @@
  */
 package networks;
 import Carte.Carte;
+import Carte.Edge;
 import Vis.Vis;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -22,16 +24,19 @@ public class Networks {
     public static void main(String[] args) throws FileNotFoundException{
         Random rand = new Random();
         
-        Carte map = new Carte("data/"+"idf"+".in");
+        Carte map = new Carte("data/"+"france"+".in");
         System.out.println("done building map");
         Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]);
         int idn = ids.length;
         int start = rand.nextInt(idn);
         int end = rand.nextInt(idn);
         System.out.println("vertex number: " + ids.length + "--" + ids[0] + "//" + ids[ids.length -1]);
-        map.computeDijkstra(ids[start]);
+        //map.computeDijkstra(ids[start]);
+        List<Edge> medge = map.computeDijkstraWithPerimeter(ids[start], 3600000);
+        System.out.println(medge.size());
         System.out.println("computed Dijkstra");
-        Vis.savePath(map.shortestPathTo(ids[end]), "test");
+        Vis.savePerimeter(map.vertices.get(ids[start]), medge, "test");
+//        Vis.savePath(map.shortestPathTo(ids[end]), "test");
 //        System.out.println(map.vertices.toString());
 //        Vis.save(map, "test");
         //map.saveVertexToVisFile("test");

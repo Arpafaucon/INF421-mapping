@@ -63,4 +63,12 @@ public class Vis {
     public static void savePath(List<Vertex> path, String filename){
         Vis.save(path, path.get(0), filename);
     }
+    
+    public static void savePerimeter(Vertex startVertex, List<Edge> edges, String filename){
+        List<Vertex> points = new ArrayList<>();
+        for(Edge e : edges){
+            points.add(e.endVertex);
+        }
+        Vis.save(points, startVertex, filename);
+    }
 }
