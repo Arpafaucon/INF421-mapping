@@ -29,7 +29,7 @@ public class Carte {
      * @throws FileNotFoundException 
      */
     public Carte(String filename) throws FileNotFoundException {
-        
+        System.out.println("Building map from source: " + filename + ".in");
         File file = new File(filename);
         vertices = new HashMap();
         edges = new ArrayList<>();
@@ -37,6 +37,8 @@ public class Carte {
         String[] lineData;
         Scanner scanner = new Scanner(file);
         Edge curEdge;
+        
+        boolean firstEdge = true;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             lineData = line.split(" ");
@@ -45,6 +47,11 @@ public class Carte {
                 vertices.put(Long.parseLong(lineData[1]), new Vertex(Long.parseLong(lineData[1]), Integer.parseInt(lineData[2]), Integer.parseInt(lineData[3])));
             }
             if (lineData[0].equals("a")) {
+                if(firstEdge){
+                    firstEdge = false;
+                    System.out.println("starting Edges");
+                }
+                
                 //on a une arrete
                 curEdge = new Edge(vertices.get(Long.parseLong(lineData[1])), vertices.get(Long.parseLong(lineData[2])), Integer.parseInt(lineData[3]));
                 edges.add(curEdge);
@@ -52,6 +59,7 @@ public class Carte {
                 vertices.get(Long.parseLong(lineData[2])).comingEdges.add(curEdge);
             }
         }
+        System.out.println("finished building map");
     }
 
     @Override
@@ -118,6 +126,51 @@ public class Carte {
        
     }
         
+    
+    public List<Edge> computeDijkstraWithPerimeter(long startVertexId, int distanceLimit) {
+        List<Edge> markedEdge = new LinkedList<>();
+        Vertex v;
+        Vertex voisin;
+        int altDistance;
+        
+        vertices.get(startVertexId).dist = 0;
+        PriorityQueue<Vertex> queue = new PriorityQueue(vertices.values());
+        System.out.print("depilig queue: ");
+        int n = queue.size()/5;
+        
+        
+        
+        
+        while(!queue.isEmpty()){
+            v = queue.poll();
+            if(queue.size()%n==0){
+                System.out.print("=");
+            }
+            for(Edge leaving : v.leavingEdges){
+                voisin = leaving.endVertex;
+                altDistance = v.dist + leaving.length;
+                if(altDistance < voisin.dist){
+                    //on a trouvé un chemi plus court. On modifie l'object (et on le desinsere reinsere pour cela)
+                    queue.remove(voisin);
+                    voisin.pred = v;
+                    voisin.dist = altDistance;
+                    
+                    queue.add(voisin);
+                    
+                    if(v.dist < distanceLimit && altDistance > distanceLimit){
+                        //on passe la limite horaire
+                        markedEdge.add(leaving);
+                    }
+                    else if(altDistance < distanceLimit){
+                        //markedEdge.remove(leaving);
+                    }
+                }
+            }
+        }
+        
+        return markedEdge;
+        //on a la distance de tous les points.
+    }
     
     public List<Vertex> shortestPathTo(long endVertexId){
         List<Vertex> path = new LinkedList<>();
