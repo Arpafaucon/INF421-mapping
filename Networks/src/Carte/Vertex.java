@@ -1,9 +1,10 @@
 package Carte;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Vertex implements Comparable<Vertex>{
+public class Vertex implements Comparable<Vertex>, Serializable{
 
     long id;
     int lat;
@@ -33,7 +34,7 @@ public class Vertex implements Comparable<Vertex>{
     }
 
     public String toGeoString() {
-        return "[" + Math.round(this.lng * 1e6) * 1e-12 + "," + Math.round(this.lat * 1e6) * 1e-12 + "]";
+        return "[" + Math.round(this.lng) * 1e-6 + "," + Math.round(this.lat) * 1e-6 + "]";
     }
     
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 //import java.io.IOException;
 //import java.io.FileWriter;
 //import java.io.BufferedWriter;
@@ -14,14 +15,18 @@ import java.util.PriorityQueue;
 //import java.util.Map.Entry;
 import java.util.Scanner;
 
-public class Carte {
+public class Carte implements Serializable{
 
     public HashMap<Long, Vertex> vertices;
     public List<Edge> edges;
+    //public HashMap<Long, DjikInfo> djikstra; //essai de découplage de la carte et du Djikstra
+    
+    private final int PROGRESS = 10;
 
     public Carte() {
-        vertices = new HashMap();
+        vertices = new HashMap<>();
         edges = new ArrayList<>();
+        //djikstra = new Hashmap<>();
     }
     /**
      * 
@@ -29,7 +34,7 @@ public class Carte {
      * @throws FileNotFoundException 
      */
     public Carte(String filename) throws FileNotFoundException {
-        System.out.println("Building map from source: " + filename + ".in");
+        System.out.println("Building map from source: " + filename);
         File file = new File(filename);
         vertices = new HashMap();
         edges = new ArrayList<>();
@@ -77,9 +82,16 @@ public class Carte {
         PriorityQueue<Vertex> queue = new PriorityQueue(vertices.values());
         System.out.println("built queue");
         
+        int n = queue.size()/PROGRESS;
+        
+        
         while(!queue.isEmpty()){
             v = queue.poll();
             for(Edge leaving : v.leavingEdges){
+                if(queue.size()%n==0){
+                System.out.print("=");
+            }
+                
                 voisin = leaving.endVertex;
                 altDistance = v.dist + leaving.length;
                 if(altDistance < voisin.dist){
@@ -95,22 +107,25 @@ public class Carte {
         //on a la distance de tous les points.
     }
     
-    public List<Edge> computeDijkstraWithPerimeter(long startVertexId, int distanceLimit) {
+    public List<Vertex> computeDijkstraWithPerimeter(long startVertexId, int distanceLimit) {
         List<Edge> markedEdge = new LinkedList<>();
         Vertex v;
         Vertex voisin;
         int altDistance;
+        boolean tooFar = false;
         
         vertices.get(startVertexId).dist = 0;
         PriorityQueue<Vertex> queue = new PriorityQueue(vertices.values());
         System.out.print("depilig queue: ");
-        int n = queue.size()/5;
+        int n = queue.size()/PROGRESS;
         
-        
-        
-        
-        while(!queue.isEmpty()){
+        while(!queue.isEmpty() && !tooFar){
             v = queue.poll();
+            if(v.dist > distanceLimit){
+                System.out.println("got out of perimeter");
+                tooFar = true;
+                break;
+            }
             if(queue.size()%n==0){
                 System.out.print("=");
             }
@@ -136,7 +151,22 @@ public class Carte {
             }
         }
         
-        return markedEdge;
+        List<Vertex> markedPlots = new LinkedList<>();
+        int d1, d2, dd, lat, lng;
+        double c1, c2;
+        for(Edge e : markedEdge){
+            d1 = (distanceLimit - e.startVertex.dist);
+            d2 = e.endVertex.dist - distanceLimit;
+            dd = d1 + d2;
+            c1 = 1.*d1 / dd;
+            c2 = 1.*d2 / dd;
+            lat = (int)(c1* e.startVertex.lat + c2 * e.endVertex.lat);
+            lng = (int)(c1* e.startVertex.lng + c2 * e.endVertex.lng);
+            System.out.println("plot " + c1+" " +" "+ c2 +" "+ dd +" "+ lat +" "+ lng + " " +e.startVertex.toString() + " " + e.endVertex.toString());
+            markedPlots.add(new Vertex(0, lat, lng));
+        }
+        
+        return markedPlots;
         //on a la distance de tous les points.
     }
     
