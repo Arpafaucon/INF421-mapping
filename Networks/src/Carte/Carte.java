@@ -101,11 +101,43 @@ public class Carte implements Serializable{
                     voisin.dist = altDistance;
                     queue.add(voisin);
                 }
+                
             }
         }
+        }
+        public List<Edge> computeDijkstraLimite(long startVertexId, int limite) {
+            Vertex v;
+            Vertex voisin;
+            int altDistance;
+            List<Edge> res=new LinkedList<Edge>();
+            
+            vertices.get(startVertexId).dist = 0;
+            PriorityQueue<Vertex> queue = new PriorityQueue(vertices.values());
+            System.out.println("built queue");
+            
+            while(!queue.isEmpty()){
+                v = queue.poll();
+                for(Edge leaving : v.leavingEdges){
+                    voisin = leaving.endVertex;
+                    altDistance = v.dist + leaving.length;
+                    int temp =v.dist;
+                    if(altDistance < voisin.dist){
+                        //on a trouvé un chemi plus court. On modifie l'object (et on le desinsere reinsere pour cela)
+                        queue.remove(voisin);
+                        voisin.pred = v;
+                        voisin.dist = altDistance;
+                        queue.add(voisin);
+                    }
+                   if ((v.dist>limite)&&(temp<limite) ){
+                	   res.add(leaving);
+                   }
+                }
+            }
+            return (res);
         
-        //on a la distance de tous les points.
+       
     }
+        
     
     public List<Vertex> computeDijkstraWithPerimeter(long startVertexId, int distanceLimit) {
         List<Edge> markedEdge = new LinkedList<>();

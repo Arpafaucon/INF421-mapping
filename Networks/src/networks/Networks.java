@@ -27,10 +27,10 @@ public class Networks {
 
         Random rand = new Random();
 
-        Carte map = new Carte("data/"+"france"+".in");
-        Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]);
+        Carte map = new Carte("data/"+"malta"+".in");
+        System.out.println("done building map");
+        Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]); //id des points
         int idn = ids.length;
-        
         System.out.println("vertex number: " + ids.length + "--" + ids[0] + "//" + ids[ids.length -1]);
         //map.computeDijkstra(ids[start]);
         
