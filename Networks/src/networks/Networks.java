@@ -39,7 +39,7 @@ public class Networks {
         List<Vertex> mvertex = map.computeDijkstraWithPerimeterExact(ids[start], 360000);
         System.out.println(medge.size());
         System.out.println("computed Dijkstra");
-        Vis.savePerimeter(map.vertices.get(ids[start]), medge, "test");
+        //Vis.savePerimeter(map.vertices.get(ids[start]), medge, "test");
         Vis.savePath(map.shortestPathTo(ids[end]), "test");
         Vis.savePath(mvertex, "test");
         System.out.println(map.vertices.toString());
