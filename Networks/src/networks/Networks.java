@@ -5,7 +5,10 @@
  */
 package networks;
 import Carte.Carte;
+<<<<<<< HEAD
 import Carte.Edge;
+=======
+>>>>>>> 0199d97e8d6f1938c333bc6d2d5af1ded4e2aac7
 import Carte.Vertex;
 import Vis.Vis;
 
@@ -19,6 +22,8 @@ import java.util.Random;
  */
 public class Networks {
 
+    //private static final int ATTEMPTS = 10;
+    private static final int TEMPSM = 120;
     /**
      * @param args the command line arguments
      * @throws java.io.FileNotFoundException
@@ -28,11 +33,10 @@ public class Networks {
         Random rand = new Random();
 
         Carte map = new Carte("data/"+"malta"+".in");
-        Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]);
 
+        System.out.println("done building map");
+        Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]); //id des points
         int idn = ids.length;
-        int start = rand.nextInt(idn); //tirage au sort de deux points
-        int end = rand.nextInt(idn);
         System.out.println("vertex number: " + ids.length + "--" + ids[0] + "//" + ids[ids.length -1]);
         //map.computeDijkstra(ids[start]);
         List<Edge> medge = map.computeDijkstraWithPerimeter(ids[start], 3600000);
@@ -48,4 +52,5 @@ public class Networks {
        // map.listVertex();
    }
     
+
 }
