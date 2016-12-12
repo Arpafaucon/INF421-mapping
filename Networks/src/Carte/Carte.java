@@ -235,8 +235,9 @@ public class Carte implements Serializable{
                     if(v.dist < distanceLimit && altDistance > distanceLimit){
                     	indice+=1;
                         //on passe la limite horaire
-                    	double t = (distanceLimit-v.dist)/(distanceLimit-altDistance);
-                        markedEdge.add(leaving.distanceexacte(t, indice));
+                    	double t = (distanceLimit-v.dist)/(altDistance-v.dist);
+                    	 
+                        markedEdge.add(leaving.distanceexacte(1-t, indice));
                    
                     }
                 }

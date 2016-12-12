@@ -5,10 +5,8 @@
  */
 package networks;
 import Carte.Carte;
-<<<<<<< HEAD
 import Carte.Edge;
-=======
->>>>>>> 0199d97e8d6f1938c333bc6d2d5af1ded4e2aac7
+
 import Carte.Vertex;
 import Vis.Vis;
 
@@ -37,17 +35,19 @@ public class Networks {
         System.out.println("done building map");
         Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]); //id des points
         int idn = ids.length;
+        int start = rand.nextInt(idn);
+        int end = rand.nextInt(idn);
         System.out.println("vertex number: " + ids.length + "--" + ids[0] + "//" + ids[ids.length -1]);
         //map.computeDijkstra(ids[start]);
-        List<Edge> medge = map.computeDijkstraWithPerimeter(ids[start], 3600000);
+        //List<Edge> medge = map.computeDijkstraWithPerimeter(ids[start], 360000);
         List<Vertex> mvertex = map.computeDijkstraWithPerimeterExact(ids[start], 360000);
-        System.out.println(medge.size());
+        //System.out.println(medge.size());
         System.out.println("computed Dijkstra");
         //Vis.savePerimeter(map.vertices.get(ids[start]), medge, "test");
-        Vis.savePath(map.shortestPathTo(ids[end]), "test");
-        Vis.savePath(mvertex, "test");
+        //Vis.savePath(map.shortestPathTo(ids[end]), "test");
+        Vis.save(mvertex, map.vertices.get(ids[start]), "test");
         System.out.println(map.vertices.toString());
-        Vis.save(map, "test");
+        //Vis.save(map, "test");
         //map.saveVertexToVisFile("test");
        // map.listVertex();
    }
