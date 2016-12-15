@@ -5,8 +5,11 @@
  */
 package networks;
 import Carte.Carte;
+import Carte.Edge;
+
 import Carte.Vertex;
 import Vis.Vis;
+
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Random;
@@ -28,22 +31,26 @@ public class Networks {
         Random rand = new Random();
 
         Carte map = new Carte("data/"+"malta"+".in");
+
         System.out.println("done building map");
         Long[] ids = (Long[])map.vertices.keySet().toArray(new Long[0]); //id des points
         int idn = ids.length;
+        int start = rand.nextInt(idn);
+        int end = rand.nextInt(idn);
         System.out.println("vertex number: " + ids.length + "--" + ids[0] + "//" + ids[ids.length -1]);
         //map.computeDijkstra(ids[start]);
-        
-        int start = rand.nextInt(idn);
-        List<Vertex> peri = map.computeDijkstraWithPerimeter(ids[start], TEMPSM * 60000);
-        System.out.println(peri.size());
+        //List<Edge> medge = map.computeDijkstraWithPerimeter(ids[start], 360000);
+        List<Vertex> mvertex = map.computeDijkstraWithPerimeterExact(ids[start], 360000);
+        //System.out.println(medge.size());
         System.out.println("computed Dijkstra");
-        Vis.save(peri, map.vertices.get(ids[start]), "test");
-//        Vis.savePath(map.shortestPathTo(ids[end]), "test");
-//        System.out.println(map.vertices.toString());
-//        Vis.save(map, "test");
+        //Vis.savePerimeter(map.vertices.get(ids[start]), medge, "test");
+        //Vis.savePath(map.shortestPathTo(ids[end]), "test");
+        Vis.save(mvertex, map.vertices.get(ids[start]), "test");
+        System.out.println(map.vertices.toString());
+        //Vis.save(map, "test");
         //map.saveVertexToVisFile("test");
-      // map.listVertex();
-    }
+       // map.listVertex();
+   }
+    
 
 }

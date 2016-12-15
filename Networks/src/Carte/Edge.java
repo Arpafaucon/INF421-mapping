@@ -38,5 +38,20 @@ public class Edge implements Serializable{
         return "E::"+start+"-"+end+"::"+length;
     }
     
+    public Vertex distanceexacte(double t, long indice){ //on doit avoir t dans [0,1]
+    	Vertex start = this.startVertex;
+    	Vertex end = this.endVertex;
+    	int l = this.length;
+    	int l1=(int) t*l;
+    	int l2=(int) (1-t)*length;
+    	int lat=(int) (t*start.lat+(1-t)*end.lat);
+    	int lng=(int) (t*start.lng+(1-t)*end.lng);
+    	
+    	Vertex nouv = new Vertex(indice, lat, lng);
+    	nouv.comingEdges.add(new Edge(start, nouv, l1));
+    	nouv.leavingEdges.add(new Edge(nouv, end, l2));
+    	return nouv;
+    }
+    
 
 }

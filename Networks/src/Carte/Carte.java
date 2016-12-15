@@ -202,6 +202,52 @@ public class Carte implements Serializable{
         //on a la distance de tous les points.
     }
     
+    public List<Vertex> computeDijkstraWithPerimeterExact(long startVertexId, int distanceLimit) {
+        List<Vertex> markedEdge = new LinkedList<>();
+        Vertex v;
+        Vertex voisin;
+        int altDistance;
+        long indice =0; //indice des points intermediaires qu'on va créer
+        vertices.get(startVertexId).dist = 0;
+        PriorityQueue<Vertex> queue = new PriorityQueue(vertices.values());
+        System.out.print("depilig queue: ");
+        int n = queue.size()/5;
+        
+        
+        
+        
+        while(!queue.isEmpty()){
+            v = queue.poll();
+            if(queue.size()%n==0){
+                System.out.print("=");
+            }
+            for(Edge leaving : v.leavingEdges){
+                voisin = leaving.endVertex;
+                altDistance = v.dist + leaving.length;
+                if(altDistance < voisin.dist){
+                    //on a trouvÃ© un chemin plus court. On modifie l'object (et on le desinsere reinsere pour cela)
+                    queue.remove(voisin);
+                    voisin.pred = v;
+                    voisin.dist = altDistance;
+                    
+                    queue.add(voisin);
+                    
+                    if(v.dist < distanceLimit && altDistance > distanceLimit){
+                    	indice+=1;
+                        //on passe la limite horaire
+                    	double t = (distanceLimit-v.dist)/(altDistance-v.dist);
+                    	 
+                        markedEdge.add(leaving.distanceexacte(1-t, indice));
+                   
+                    }
+                }
+            }
+        }
+        
+        return markedEdge;
+        //on a la distance de tous les points.
+    }
+    
     public List<Vertex> shortestPathTo(long endVertexId){
         List<Vertex> path = new LinkedList<>();
         Vertex v = vertices.get(endVertexId);
