@@ -41,21 +41,30 @@ If you are not seeing an OpenStreetMap in the background, this may be because th
 			'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
 		id: 'mapbox.streets'
 	}).addTo(mymap);
-
-
-	// Create layergroup with points and central marker on separate layers
 	
-	var layers = L.layerGroup();
+	var fileInput = document.querySelector('#datafile');
+    fileInput.addEventListener('change', function() {
+        var reader = new FileReader();
+        reader.addEventListener('load', function() {
+            var data = JSON.parse(reader.result)
+			//expected : plottedPoints : array of [double, double]
+			//			 centralMarker : [double, double]
+			var layers = L.layerGroup();
 
-	for (var i = 0; i < plottedPoints.length; i++)
-		layers.addLayer(new L.circle(plottedPoints[i],
-			5, {color: 'red', fillOpacity: 0.5}) // Optional styles
-		);
+			for (var i = 0; i < data.plottedPoints.length; i++)
+				layers.addLayer(new L.circle(data.plottedPoints[i],
+					5, {color: 'red', fillOpacity: 0.5}) // Optional styles
+			);
 
-	layers.addLayer (new L.marker (centralMarker));
+			layers.addLayer (new L.marker (data.centralMarker));
+			
+			mymap.addLayer(layers);
+			mymap.fitBounds(L.latLngBounds(data.plottedPoints)); // Zoom to fit
+        });
+        reader.readAsText(fileInput.files[0]);
+    });
 	
-	mymap.addLayer(layers);
-	mymap.fitBounds(L.latLngBounds(plottedPoints)); // Zoom to fit
+	
 	
 </script>
 

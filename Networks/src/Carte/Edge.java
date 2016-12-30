@@ -5,13 +5,11 @@
  */
 package Carte;
 
-import java.io.Serializable;
-
 /**
  *
  * @author arpaf
  */
-public class Edge implements Serializable{
+public class Edge{
     long start;
     long end;
     int length;

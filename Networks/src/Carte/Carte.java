@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Serializable;
 //import java.io.IOException;
 //import java.io.FileWriter;
 //import java.io.BufferedWriter;
@@ -15,7 +14,7 @@ import java.util.PriorityQueue;
 //import java.util.Map.Entry;
 import java.util.Scanner;
 
-public class Carte implements Serializable{
+public class Carte{
 
     public HashMap<Long, Vertex> vertices;
     public List<Edge> edges;
@@ -28,6 +27,7 @@ public class Carte implements Serializable{
         edges = new ArrayList<>();
         //djikstra = new Hashmap<>();
     }
+    
     /**
      * 
      * @param filename : fichier Ã  charger
@@ -207,15 +207,11 @@ public class Carte implements Serializable{
         Vertex v;
         Vertex voisin;
         int altDistance;
-        long indice =0; //indice des points intermediaires qu'on va créer
+        long indice =0; //indice des points intermediaires qu'on va crï¿½er
         vertices.get(startVertexId).dist = 0;
         PriorityQueue<Vertex> queue = new PriorityQueue(vertices.values());
         System.out.print("depilig queue: ");
         int n = queue.size()/5;
-        
-        
-        
-        
         while(!queue.isEmpty()){
             v = queue.poll();
             if(queue.size()%n==0){
@@ -257,5 +253,12 @@ public class Carte implements Serializable{
             path.add(0, v);
         }
         return path;
+    }
+    
+    public void purge(){
+        for(Vertex v : vertices.values()){
+            v.pred =  null;
+            v.dist = Integer.MAX_VALUE;
+        }
     }
 }
