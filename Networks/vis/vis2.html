@@ -33,6 +33,7 @@ If you are not seeing an OpenStreetMap in the background, this may be because th
 	// Initialize map with its OpenStreetMap raster-tile layer
 	
 	var mymap = L.map('mapid');
+	var layers = L.layerGroup();
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHh0cm91cyIsImEiOiJjaXVweGplYzMwMDFsMnptaG9hMmUwNTJsIn0.xn_S-lFNp588ewRnnhQ6Uw', {
 		maxZoom: 18,
@@ -46,14 +47,16 @@ If you are not seeing an OpenStreetMap in the background, this may be because th
     fileInput.addEventListener('change', function() {
         var reader = new FileReader();
         reader.addEventListener('load', function() {
+		
+			
             var data = JSON.parse(reader.result)
 			//expected : plottedPoints : array of [double, double]
 			//			 centralMarker : [double, double]
-			var layers = L.layerGroup();
+			layers.clearLayers();
 
 			for (var i = 0; i < data.plottedPoints.length; i++)
 				layers.addLayer(new L.circle(data.plottedPoints[i],
-					5, {color: 'red', fillOpacity: 0.5}) // Optional styles
+					3, {color: 'red', fillOpacity: 0.5}) // Optional styles
 			);
 
 			layers.addLayer (new L.marker (data.centralMarker));

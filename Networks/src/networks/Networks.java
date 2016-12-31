@@ -32,8 +32,8 @@ public class Networks {
 
         Random rand = new Random();
 
-        Carte map = new Carte("data/" + "malta" + ".in");
-        multiPerimeter(map, 360000, 5, "malta");
+        Carte map = new Carte("data/" + "france" + ".in");
+        multiPerimeter(map, 3600000, 10, "france");
 //        System.out.println("done building map");
 //        //map.computeDijkstra(ids[start]);
 //        //List<Edge> medge = map.computeDijkstraWithPerimeter(ids[start], 360000);
@@ -60,8 +60,8 @@ public class Networks {
         Long[] ids = (Long[]) map.vertices.keySet().toArray(new Long[0]); //id des points
         int idn = ids.length;
         
-        for (int i = 1; i < n; i++) {
-            if(i>0){
+        for (int i = 1; i <= n; i++) {
+            if(i>1){
                 map.purge();
             }
             generatePerimeter(map, ids[rand.nextInt(idn)], length, filenameSeed+i); 
