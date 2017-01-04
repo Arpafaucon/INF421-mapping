@@ -19,45 +19,45 @@ import java.util.List;
  */
 public class Vis {
 
-    public static void save(List<Vertex> plottedVertex, Vertex centralVertex, String filename) {
-    	System.out.println(System.getProperty("user.dir"));
-        File file = new File("vis/" + filename + ".js");
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            try (BufferedWriter bw = new BufferedWriter(fw)) {
-                bw.write("var plottedPoints = [\n");
-                int n = plottedVertex.size();
-                String line;
-                for (int i = 0; i < n; i++) {
-                    line = "\t" + plottedVertex.get(i).toGeoString() + (i < n - 1 ? ',' : "") + "\n";
-                    bw.write(line);
-                }   bw.write("];\n");
-                bw.write("var centralMarker =");
-                System.out.println("central vertex...");
-                bw.write(centralVertex.toGeoString() + ";");
-//            Map.Entry curEntry;
-//            Vertex curVertex = new Vertex(0, 0, 0);
-//            while (entries.hasNext()) {
-//                curEntry = (Map.Entry) entries.next();
-//                //Long key = (Long) thisEntry.getKey();
-//                curVertex = (Vertex) curEntry.getValue();
-//                line = "\t" + curVertex.toGeoString() + (entries.hasNext() ? ',' : "") + "\n";
-//                bw.write(line);
-//                // ...
+//    public static void save(List<Vertex> plottedVertex, Vertex centralVertex, String filename) {
+//    	System.out.println(System.getProperty("user.dir"));
+//        File file = new File("vis/" + filename + ".js");
+//        try {
+//            if (!file.exists()) {
+//                file.createNewFile();
 //            }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
+//
+//            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+//            try (BufferedWriter bw = new BufferedWriter(fw)) {
+//                bw.write("var plottedPoints = [\n");
+//                int n = plottedVertex.size();
+//                String line;
+//                for (int i = 0; i < n; i++) {
+//                    line = "\t" + plottedVertex.get(i).toGeoString() + (i < n - 1 ? ',' : "") + "\n";
+//                    bw.write(line);
+//                }   bw.write("];\n");
+//                bw.write("var centralMarker =");
+//                System.out.println("central vertex...");
+//                bw.write(centralVertex.toGeoString() + ";");
+////            Map.Entry curEntry;
+////            Vertex curVertex = new Vertex(0, 0, 0);
+////            while (entries.hasNext()) {
+////                curEntry = (Map.Entry) entries.next();
+////                //Long key = (Long) thisEntry.getKey();
+////                curVertex = (Vertex) curEntry.getValue();
+////                line = "\t" + curVertex.toGeoString() + (entries.hasNext() ? ',' : "") + "\n";
+////                bw.write(line);
+////                // ...
+////            }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    
     public static void saveJSON(List<Vertex> plottedVertex, Vertex centralVertex, String filename) {
-    	System.out.println(System.getProperty("user.dir"));
-        File file = new File("vis/" + filename + ".json");
+        String totalFilename = "vis/" + filename + ".json";
+        File file = new File(totalFilename);
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -79,23 +79,59 @@ public class Vis {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("saved : " + totalFilename);
+    }
+    
+        public static void saveIsochronesJSON(final List<Integer> distances, final List<List<Vertex>> plottedVertex, final Vertex centralVertex, final String filename) {
+        int m,n;
+        String totalFilename = "vis/" + filename + ".json";
+        File file = new File(totalFilename);
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            try (BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write("{\"plottedPoints\" : [\n");
+                n = plottedVertex.size();
+                String line;
+                for (int i = 0; i < n; i++) {
+                    bw.write("\t{\n\t\"distance\" : " + distances.get(i) + ",\n"
+                            + "\t\"points\" : [\n");
+                    m = plottedVertex.get(i).size();
+                    for (int j = 0; j < m; j++) {
+                        line = "\t\t" + plottedVertex.get(i).get(j).toGeoString() + (j < m - 1 ? ',' : "") + "\n";
+                        bw.write(line);
+                    }
+                    bw.write("\t\t]\n\t}"+ (i < n - 1 ? ',' : "") + "\n");
+                }   
+                bw.write("],\n");
+                bw.write("\"centralMarker\" :");
+                bw.write(centralVertex.toGeoString() + "}");
+//            }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("saved : " + totalFilename);
     }
 
-    public static void save(Carte carte, String filename) {
-        ArrayList<Vertex> plottedVertex = new ArrayList<>(carte.vertices.values());
-        Vertex centralVertex = plottedVertex.get(0);
-        Vis.save(plottedVertex, centralVertex, filename);
-    }
-    
-    public static void savePath(List<Vertex> path, String filename){
-        Vis.save(path, path.get(0), filename);
-    }
-    
-    public static void savePerimeter(Vertex startVertex, List<Edge> edges, String filename){
-        List<Vertex> points = new ArrayList<>();
-        for(Edge e : edges){
-            points.add(e.endVertex);
-        }
-        Vis.save(points, startVertex, filename);
-    }
+//    public static void save(Carte carte, String filename) {
+//        ArrayList<Vertex> plottedVertex = new ArrayList<>(carte.vertices.values());
+//        Vertex centralVertex = plottedVertex.get(0);
+//        Vis.save(plottedVertex, centralVertex, filename);
+//    }
+//    
+//    public static void savePath(List<Vertex> path, String filename){
+//        Vis.save(path, path.get(0), filename);
+//    }
+//    
+//    public static void savePerimeter(Vertex startVertex, List<Edge> edges, String filename){
+//        List<Vertex> points = new ArrayList<>();
+//        for(Edge e : edges){
+//            points.add(e.endVertex);
+//        }
+//        Vis.save(points, startVertex, filename);
+//    }
 }
