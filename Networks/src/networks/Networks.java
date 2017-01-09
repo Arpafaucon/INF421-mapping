@@ -61,8 +61,8 @@ public class Networks {
 //        multiPerimeter(map, 60*MINUTES, 5, "random-");      
         
         /*Section 3 - see intermediary points at 1h of Palaiseau when going to holidays far away (more than 2h)*/
-        Carte map = new Carte("data/" + "france" + ".in");
-        generatePerimeter(map, idPalaiseau, 60*MINUTES, 240*MINUTES, "paris1h4h");
+//        Carte map = new Carte("data/" + "france" + ".in");
+//        generatePerimeter(map, idPalaiseau, 60*MINUTES, 240*MINUTES, "paris1h4h");
 
 
         /*Section 4 - see how far we can be from Paris in durations ranging from 1 minute to 8 hours */
@@ -75,25 +75,6 @@ public class Networks {
 
         /*Section 5bis - generate a custom percolation map with factor p = 60%*/
 //        (new Percolation(0.60)).saveData("pfra60_big");
-
-        
-        
-
-        
-//
-//             //generate a Percolation
-//        List<Vertex> plot = Vertex.geoScan(new ArrayList<>(map.vertices.values()),2.211766,48.709849, 0.015);
-//        Vis.saveJSON(plot, new Vertex(0,2211766,48709849), "a");
-
-//        List<Integer> dists = new ArrayList<>(Arrays.asList(1,10,30,60, 120, 240, 360, 480));
-
-
-//      Carte map = new Carte("data/" + "france" + ".in");
-//      generatePerimeter(map, 218228965, 120*60*1000, "palaiseau2h");
-        
-
-
-
     }
    
 
@@ -121,8 +102,7 @@ public class Networks {
         
     }
     
-    public static void multiPerimeter(Carte map, int length, int lDest,  int n, String filenameSeed){
-        
+    public static void multiPerimeter(Carte map, int length, int lDest,  int n, String filenameSeed){ 
         Random rand = new Random();
         Long[] ids = (Long[]) map.vertices.keySet().toArray(new Long[0]); //id des points
         int idn = ids.length;

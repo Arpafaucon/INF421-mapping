@@ -52,8 +52,9 @@ public class Percolation {
         }
     }
     
-    public void genEdges(double p){
+    public void genEdges(double densite){
         Random rand = new Random();
+        double p =  1 - densite;
         Edge e;
         for (int i = 0; i < N_VERT; i++) {
             for (int j = 0; j < N_HORZ; j++) {
