@@ -41,17 +41,16 @@ public class Networks {
     public static void main(String[] args) throws FileNotFoundException {
 
 ////        Random rand = new Random();
-//        Carte map = new Carte("data/" + "france" + ".in");
+       Carte map = new Carte("data/" + "france" + ".in");
 //        //multiPerimeter(map, 60*60*1000, 120*60*1000, 10, "france2h1h-");
 //        List<Vertex> plot = Vertex.geoScan(new ArrayList<Vertex>(map.vertices.values()),  5.718472, 45.183333,0.001);
 //        Vis.saveJSON(plot, new Vertex(0, 2257740, 45707625), "grenoble");
-        List<Integer> dists = new ArrayList<>(Arrays.asList(10,20,30,45,60,120,180));
-        isochrones("france", 24923329, dists, "isoFrance");
+//        List<Integer> dists = new ArrayList<>(Arrays.asList(10,20,30,45,60,120,180));
+//        isochrones("france", 24923329, dists, "isoFrance");
 
 //        System.out.println("done building map");
 //        //map.computeDijkstra(ids[start]);
-//        //List<Edge> medge = map.computeDijkstraWithPerimeter(ids[start], 360000);
-//        List<Vertex> mvertex = map.computeDijkstraWithPerimeterExact(ids[start], 360000);
+      //  List<Edge> medge = map.computeDijkstraWithPerimeter(ids[start], 360000);
 //        
 //        //System.out.println(medge.size());
 //        System.out.println("computed Dijkstra");
@@ -62,6 +61,7 @@ public class Networks {
 //        //Vis.save(map, "test");
 //        //map.saveVertexToVisFile("test");
 //        // map.listVertex();
+       generatePerimeter(map,  24923329,  60*60*1000, "question11");
     }
 
     public static void generatePerimeter(Carte map, long idStart, int length, String filename) {
