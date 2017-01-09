@@ -7,6 +7,8 @@
  * idf->V:24923329[48853587,2349163] Center of Paris, France
  * 
  * france->V:293346386[45184257,5719177] Grenoble
+ * france->V:604287180[45395039,6710726] Pralognan-la-Vanoise
+ * france->V:84105394[46237254,3115984] Chantelle
  * 
  * 
  * 
@@ -14,7 +16,8 @@
 package networks;
 
 import Carte.Carte;
-import Carte.Edge;
+
+import Carte.Percolation;
 
 import Carte.Vertex;
 import Vis.Vis;
@@ -40,28 +43,24 @@ public class Networks {
      */
     public static void main(String[] args) throws FileNotFoundException {
 
-////        Random rand = new Random();
-       Carte map = new Carte("data/" + "france" + ".in");
-//        //multiPerimeter(map, 60*60*1000, 120*60*1000, 10, "france2h1h-");
-//        List<Vertex> plot = Vertex.geoScan(new ArrayList<Vertex>(map.vertices.values()),  5.718472, 45.183333,0.001);
-//        Vis.saveJSON(plot, new Vertex(0, 2257740, 45707625), "grenoble");
-//        List<Integer> dists = new ArrayList<>(Arrays.asList(10,20,30,45,60,120,180));
-//        isochrones("france", 24923329, dists, "isoFrance");
 
-//        System.out.println("done building map");
-//        //map.computeDijkstra(ids[start]);
-      //  List<Edge> medge = map.computeDijkstraWithPerimeter(ids[start], 360000);
-//        
-//        //System.out.println(medge.size());
-//        System.out.println("computed Dijkstra");
-//        //Vis.savePerimeter(map.vertices.get(ids[start]), medge, "test");
-//        //Vis.savePath(map.shortestPathTo(ids[end]), "test");
-//        Vis.save(mvertex, map.vertices.get(ids[start]), "test");
-//        //System.out.println(map.vertices.toString());
-//        //Vis.save(map, "test");
-//        //map.saveVertexToVisFile("test");
-//        // map.listVertex();
-       generatePerimeter(map,  24923329,  60*60*1000, "question11");
+        
+        Carte map = new Carte("data/" + "france" + ".in");
+//        System.out.println(map.vertices.size());
+
+//        multiPerimeter(map, 2*60*1000, 2, "perc1-"); 
+//        List<Vertex> plot = Vertex.geoScan(new ArrayList<Vertex>(map.vertices.values()),2.349163, 48.853587, 0.05);
+//        Vis.saveJSON(plot, new Vertex(0,2349163, 48853587), "perc/paris");
+
+//        List<Integer> dists = new ArrayList<>(Arrays.asList(1,10,30,60, 120, 240, 360, 480));
+//        isochrones("france", 24923329, dists, "isofrance3");
+
+        generatePerimeter(map, 84105394, 60*60*1000, 120*60*1000, "chantelle1h2h");
+
+        //generate a Percolation
+//        (new Percolation(0.53)).saveData("pfra_med");
+
+
     }
 
     public static void generatePerimeter(Carte map, long idStart, int length, String filename) {
