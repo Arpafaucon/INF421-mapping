@@ -55,8 +55,8 @@ public class Networks {
 //        Vis.saveJSON(map.shortestPathTo(idPralognan), new Vertex(idPralognan,45395039,6710726), "gotoPralognan");
         
         /*Section 2 - generating an isochrone set of points around Palaiseau distant of 1h30 (90 minutes)*/
-//        Carte map = new Carte("data/" + "france" + ".in");
-//        generatePerimeter(map, idPalaiseau, 90*MINUTES, "palaiseau1h30");
+        Carte map = new Carte("data/" + "france" + ".in");
+        generatePerimeter(map, idParis, 66*MINUTES, "paris1h66m");
 
         /* Section 2bis - generating 5 random isochrones at once */
 //        Carte map = new Carte("data/" + "france" + ".in");
