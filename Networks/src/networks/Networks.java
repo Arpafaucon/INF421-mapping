@@ -9,7 +9,7 @@
  * france->V:293346386[45184257,5719177] Grenoble
  * france->V:604287180[45395039,6710726] Pralognan-la-Vanoise
  * france->V:84105394[46237254,3115984] Chantelle
- * 
+ * france->V:218228965[48709865,2210247]
  * 
  * 
  */
@@ -42,21 +42,29 @@ public class Networks {
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {
-//        Carte map = new Carte("data/" + "france" + ".in");
+        
+        /*Section1 - generating a shortest path between Palaiseau and Pralognan-la-Vanoise*/
+        Carte map = new Carte("data/" + "france" + ".in");
+        map.computeDijkstra(218228965);
+        Vis.saveJSON(map.shortestPathTo(604287180), args, "gotoPralognan");
+        //generate a Percolation
+        (new Percolation(0.40)).saveData("pfra_big");
+
+        Carte map = new Carte("data/" + "pfra_big" + ".in");
 //
-////        multiPerimeter(map, 2*60*1000, 2, "perc1-"); 
-//        List<Vertex> plot = Vertex.geoScan(new ArrayList<>(map.vertices.values()),2.211766,48.709849, 0.005);
-//        Vis.saveJSON(plot, new Vertex(0,2211766,48709849), "palaiseau");
+//             //generate a Percolation
+        multiPerimeter(map, 60*60*1000, 5, "perc1-"); 
+//        List<Vertex> plot = Vertex.geoScan(new ArrayList<>(map.vertices.values()),2.211766,48.709849, 0.015);
+//        Vis.saveJSON(plot, new Vertex(0,2211766,48709849), "a");
 
 //        List<Integer> dists = new ArrayList<>(Arrays.asList(1,10,30,60, 120, 240, 360, 480));
 //        isochrones("france", 24923329, dists, "isofrance3");
 
-      Carte map = new Carte("data/" + "france" + ".in");
-      generatePerimeter(map, 24923329, 60*60*1000, 120*60*1000, "paris1h2h");
+//      Carte map = new Carte("data/" + "france" + ".in");
+//      generatePerimeter(map, 218228965, 120*60*1000, "palaiseau2h");
         
 
-            //generate a Percolation
-//        (new Percolation(0.53)).saveData("pfra_med");
+
 
     }
    
