@@ -18,8 +18,8 @@ import java.util.Random;
  */
 public class Percolation {
   
-    final int N_VERT = 235*2;
-    final int N_HORZ = 239*2;
+    final int N_VERT = 235*4;
+    final int N_HORZ = 239*4;
 //    final int N_VERT = 940;
 //    final int N_HORZ = 956;
     final int GPS_N = 51070000;

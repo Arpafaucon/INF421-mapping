@@ -140,7 +140,7 @@ public class Carte {
 
                     queue.add(voisin);
 
-                    if (v.dist < distanceLimit && altDistance > distanceLimit) {
+                    if (v.dist <= distanceLimit && altDistance > distanceLimit) {
                         //on passe la limite horaire
                         markedEdge.add(leaving);
                     }
@@ -202,7 +202,7 @@ public class Carte {
 
                     queue.add(voisin);
 
-                    if (v.dist < distanceDestination && altDistance > distanceDestination) {
+                    if (v.dist <= distanceDestination && altDistance > distanceDestination) {
                         //on passe la limite horaire
                         markedPlots.add(v);
                     } else if (altDistance < distanceDestination) {
