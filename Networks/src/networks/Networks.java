@@ -46,8 +46,10 @@ public class Networks {
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {
+
         
         /*Section1 - generating a shortest path between Palaiseau and Pralognan-la-Vanoise*/
+
 //        Carte map = new Carte("data/" + "france" + ".in");
 //        map.computeDijkstra(idPalaiseau);
 //        Vis.saveJSON(map.shortestPathTo(idPralognan), new Vertex(idPralognan,45395039,6710726), "gotoPralognan");
@@ -58,7 +60,7 @@ public class Networks {
 
         /* Section 2bis - generating 5 random isochrones at once */
 //        Carte map = new Carte("data/" + "france" + ".in");
-//        multiPerimeter(map, 60*MINUTES, 5, "random-");      
+//        multiPerimeter(map, 60*MINUTES, 5, "random-");
         
         /*Section 3 - see intermediary points at 1h of Palaiseau when going to holidays far away (more than 2h)*/
 //        Carte map = new Carte("data/" + "france" + ".in");
