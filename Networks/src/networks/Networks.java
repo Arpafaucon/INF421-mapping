@@ -43,22 +43,22 @@ public class Networks {
      */
     public static void main(String[] args) throws FileNotFoundException {
 
-
+        //generate a Percolation
+      (new Percolation(0.100)).saveData("pfra100_med");
         
-        Carte map = new Carte("data/" + "france" + ".in");
+        Carte map = new Carte("data/" + "pfra100_med" + ".in");
 //        System.out.println(map.vertices.size());
 
-//        multiPerimeter(map, 2*60*1000, 2, "perc1-"); 
+        multiPerimeter(map, 30*1000, 2, "perc1-"); 
 //        List<Vertex> plot = Vertex.geoScan(new ArrayList<Vertex>(map.vertices.values()),2.349163, 48.853587, 0.05);
 //        Vis.saveJSON(plot, new Vertex(0,2349163, 48853587), "perc/paris");
 
 //        List<Integer> dists = new ArrayList<>(Arrays.asList(1,10,30,60, 120, 240, 360, 480));
 //        isochrones("france", 24923329, dists, "isofrance3");
 
-        generatePerimeter(map, 84105394, 60*60*1000, 120*60*1000, "chantelle1h2h");
+        //generatePerimeter(map, 84105394, 60*60*1000, 120*60*1000, "chantelle1h2h");
 
-        //generate a Percolation
-//        (new Percolation(0.53)).saveData("pfra_med");
+
 
 
     }
