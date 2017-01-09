@@ -115,6 +115,7 @@ public class Carte {
 
         vertices.get(startVertexId).dist = 0;
         PriorityQueue<Vertex> queue = new PriorityQueue(vertices.values());
+       
         System.out.print("depiling queue: ");
         int n = queue.size() / PROGRESS;
 

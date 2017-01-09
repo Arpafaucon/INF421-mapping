@@ -36,6 +36,10 @@ public class Edge{
         return "E::"+start+"-"+end+"::"+length;
     }
     
+    public String toDataString(){
+        return "a " + start + " " + end + " " + length;
+    }
+    
     public Vertex distanceexacte(double t, long indice){ //on doit avoir t dans [0,1]
     	Vertex start = this.startVertex;
     	Vertex end = this.endVertex;

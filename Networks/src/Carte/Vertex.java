@@ -37,6 +37,10 @@ public class Vertex implements Comparable<Vertex>, Serializable{
         return "[" + Math.round(this.lng) * 1e-6 + "," + Math.round(this.lat) * 1e-6 + "]";
     }
     
+    public String toDataString(){
+        return "v " + id + " " + this.lng + " " + this.lat;
+    }
+    
 
     @Override
     public int compareTo(Vertex v) {
