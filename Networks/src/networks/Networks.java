@@ -44,9 +44,9 @@ public class Networks {
     public static void main(String[] args) throws FileNotFoundException {
 
         //generate a Percolation
-      (new Percolation(0.100)).saveData("pfra100_med");
+      (new Percolation(0.0)).saveData("pfra0_med");
         
-        Carte map = new Carte("data/" + "pfra100_med" + ".in");
+        Carte map = new Carte("data/" + "pfra0_med" + ".in");
 //        System.out.println(map.vertices.size());
 
         multiPerimeter(map, 30*1000, 2, "perc1-"); 
