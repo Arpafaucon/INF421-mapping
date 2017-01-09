@@ -57,19 +57,19 @@ public class Percolation {
         Edge e;
         for (int i = 0; i < N_VERT; i++) {
             for (int j = 0; j < N_HORZ; j++) {
-                if(i>0 && rand.nextDouble() > p){ //edge vers le haut
+                if(i>0 && rand.nextDouble() < p){ //edge vers le haut
                     e = new Edge(N_HORZ*i + j, N_HORZ*(i-1) + j, LEN_MS);
                     edges.add(e);
                 }
-                if(i<N_VERT-1  && rand.nextDouble() > p){//vers le bas
+                if(i<N_VERT-1  && rand.nextDouble() < p){//vers le bas
                     e = new Edge(N_HORZ*i + j, N_HORZ*(i+1) + j, LEN_MS);
                     edges.add(e);
                 }
-                if(j>0  && rand.nextDouble() > p){ //edge vers la gauche
+                if(j>0  && rand.nextDouble() < p){ //edge vers la gauche
                     e = new Edge(N_HORZ*i + j, N_HORZ*i + j-1, LEN_MS);
                     edges.add(e);
                 }
-                if(j<N_HORZ-1  && rand.nextDouble() > p){//vers la droite
+                if(j<N_HORZ-1  && rand.nextDouble() < p){//vers la droite
                     e = new Edge(N_HORZ*i + j, N_HORZ*i + j+1, LEN_MS);
                     edges.add(e);
                 }
