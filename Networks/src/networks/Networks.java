@@ -42,24 +42,24 @@ public class Networks {
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {
-
-        
-        Carte map = new Carte("data/" + "france" + ".in");
-//        System.out.println(map.vertices.size());
-
-//        multiPerimeter(map, 2*60*1000, 2, "perc1-"); 
-//        List<Vertex> plot = Vertex.geoScan(new ArrayList<Vertex>(map.vertices.values()),2.349163, 48.853587, 0.05);
-//        Vis.saveJSON(plot, new Vertex(0,2349163, 48853587), "perc/paris");
+//        Carte map = new Carte("data/" + "france" + ".in");
+//
+////        multiPerimeter(map, 2*60*1000, 2, "perc1-"); 
+//        List<Vertex> plot = Vertex.geoScan(new ArrayList<>(map.vertices.values()),2.211766,48.709849, 0.005);
+//        Vis.saveJSON(plot, new Vertex(0,2211766,48709849), "palaiseau");
 
 //        List<Integer> dists = new ArrayList<>(Arrays.asList(1,10,30,60, 120, 240, 360, 480));
 //        isochrones("france", 24923329, dists, "isofrance3");
 
-        generatePerimeter(map, 84105394, 60*60*1000, 120*60*1000, "chantelle1h2h");
+      Carte map = new Carte("data/" + "france" + ".in");
+      generatePerimeter(map, 24923329, 60*60*1000, 120*60*1000, "paris1h2h");
+        
 
-        //generate a Percolation
+            //generate a Percolation
 //        (new Percolation(0.53)).saveData("pfra_med");
 
     }
+   
 
     public static void generatePerimeter(Carte map, long idStart, int length, String filename) {
         List<Vertex> mvertex = map.computeDijkstraIsochrone(idStart, length);
