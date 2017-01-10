@@ -55,16 +55,16 @@ public class Networks {
 //        Vis.saveJSON(map.shortestPathTo(idPralognan), new Vertex(idPralognan,45395039,6710726), "gotoPralognan");
         
         /*Section 2 - generating an isochrone set of points around Palaiseau distant of 1h30 (90 minutes)*/
-//        Carte map = new Carte("data/" + "france" + ".in");
-//        generatePerimeter(map, idParis, 90*MINUTES, "paris1h66m");
+        Carte map = new Carte("data/" + "france" + ".in");
+        generatePerimeter(map, idParis, 66*MINUTES, "paris1h66m");
 
         /* Section 2bis - generating 5 random isochrones at once */
 //        Carte map = new Carte("data/" + "france" + ".in");
 //        multiPerimeter(map, 60*MINUTES, 5, "random-");
         
         /*Section 3 - see intermediary points at 1h of Palaiseau when going to holidays far away (more than 2h)*/
-        Carte map = new Carte("data/" + "france" + ".in");
-        generatePerimeter(map, idParis, 60*MINUTES, 180*MINUTES, "paris1h3h");
+//        Carte map = new Carte("data/" + "france" + ".in");
+//        generatePerimeter(map, idPalaiseau, 60*MINUTES, 240*MINUTES, "paris1h4h");
 
 
         /*Section 4 - see how far we can be from Paris in durations ranging from 1 minute to 8 hours */
